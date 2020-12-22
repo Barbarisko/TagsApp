@@ -15,7 +15,7 @@ namespace TagsApp.Command
         }
 
         public void Execute()
-        {
+        {            
             history.Undo();
         }
     }

@@ -16,7 +16,7 @@ namespace TagsAppTests
         [SetUp]
         public void SetUp()
         {
-             actual = new Field(4, 4);
+            actual = new Field(4, 4);
             actual.Tags[0, 0].Name = Tag.Empty;
         }
 
@@ -24,7 +24,7 @@ namespace TagsAppTests
         public void MoveTag_AcceptFromToCoords_ReturnExchangedTags()
         {
             //arange
-            Field expected = new Field(4,4);
+            var expected = new Field(4,4);
             expected.Tags[1, 0].Name = Tag.Empty;
             expected.Tags[0, 0].Name = "5";
 
@@ -40,7 +40,9 @@ namespace TagsAppTests
         [TestCase(7, 6, 0, 1)]//no empty tag
         [TestCase(0, 0, 1, 1)]//too far
         [TestCase(0, 0, 0, 0)]//same tag
-        public void MoveTag_InputWrongCoords_ThrowInvalidOperationException(int fx, int fy, int tx, int ty)
+        [TestCase(-1, 0, 0, 0)]//out of the field
+        public void MoveTag_InputWrongCoords_ThrowInvalidOperationException(
+                                                                int fx, int fy, int tx, int ty)
         {
             //arrange
             fromto = new FromToCoords((uint)fx, (uint)fy, (uint)tx, (uint)ty);

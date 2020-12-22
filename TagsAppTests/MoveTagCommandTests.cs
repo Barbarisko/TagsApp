@@ -25,7 +25,6 @@ namespace TagsAppTests
             coords = new FromToCoords(0, 0, 0, 1);
         }
 
-
         [Test]
         public void Execute_MoveTagResult()
         {

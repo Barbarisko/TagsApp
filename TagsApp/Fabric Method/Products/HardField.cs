@@ -26,9 +26,9 @@ namespace TagsApp.Fabric_Method
                 base.MoveTag(fromTo);
             }
             else
-            {         
-                Core.UndoCommand.Execute();
- 
+            {
+                var core = Core.GetInstance();
+                core.UndoCommand.Execute(); 
                 MakeRandomMove();
             }
         }

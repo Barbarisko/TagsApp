@@ -79,12 +79,6 @@ namespace TagsApp
 
             int counter = 0;
 
-            //string checkForCorrectLenth = ans.Trim();
-            //if (checkForCorrectLenth.Length > 4)
-            //{
-            //    throw new InvalidInputException("Please, type in coords as in example. " +
-            //        "\nFor other options, see menu.");
-            //}
             char[] mas = ans.ToUpper().ToCharArray();    
 
             foreach (char h in mas)
@@ -105,7 +99,6 @@ namespace TagsApp
                 {
                     coords[counter] = coords[counter] * 10 + Utils.CharToIndex(h);
                 }
-
             }
             return new FromToCoords(coords[0], coords[1]-1, coords[2], coords[3]-1);
         }

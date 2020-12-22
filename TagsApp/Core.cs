@@ -14,27 +14,39 @@ namespace TagsApp
         hardField
     }
 
-    public static class Core
+    public class Core
     {
-        private static FieldCreator fieldCreator;
-        private static ICommand undoCommand;
-        public static ICommand UndoCommand { get { return undoCommand; } }
-        private static UserInputController user;
-        private static HistoryCareTaker history;
-        private static Field field;
-        private static Field winField;
-        private static FieldType FieldType;
-        //private Core core;
+        private FieldCreator fieldCreator;
+        private ICommand undoCommand;
+        public ICommand UndoCommand { get { return undoCommand; } }
+        private UserInputController user;
+        private HistoryCareTaker history;
+        private Field field;
+        private Field winField;
+        private FieldType FieldType;
+        private static Core core;
 
-        // private Core()
-
+        private Core()
+        {
+            history = new HistoryCareTaker();
+            undoCommand = new UndoCommand(history);
+        }
+        
+        public static Core GetInstance()
+        {
+            if(core == null)
+            {
+                core = new Core();
+            }
+            return core;
+        }
         //private FieldType returnFieldType(string ans)
         //{
         //    user = new UserInputController();
 
         //    return (FieldType)(user.ChooseFieldType(ans));
         //}
-        public static void Init()
+        public  void Init()
         {
             uint[] size = null;
             while (true)
@@ -74,12 +86,10 @@ namespace TagsApp
             }
             
             Switch(FieldType, size[0], size[1]);
-            history = new HistoryCareTaker();
-            undoCommand = new UndoCommand(history);
             Console.Clear();
         }
 
-        private static void Switch(FieldType ft, uint width, uint length)
+        private  void Switch(FieldType ft, uint width, uint length)
         {
             winField = FieldCreator.GenerateWinField(width, length);
 
@@ -110,7 +120,7 @@ namespace TagsApp
                     break;
             }
         }
-        public static void MainLoop()
+        public  void MainLoop()
         {
             while (field != winField)
             {
@@ -130,9 +140,9 @@ namespace TagsApp
                     if (user.GiveUp(ans.ToLower()))
                     {
                         PrintOut.Restart();
-                        break;
+                        Console.Clear();
+                        Init();
                     }
-
                     ICommand moveTagCommand = new MoveTagCommand(user.ParseMove(ans), field, history);
                     moveTagCommand.Execute();
                     Console.Clear();
@@ -140,18 +150,16 @@ namespace TagsApp
                 catch (InvalidOperationException e)
                 {
                     CatchActions(e);
-                    undoCommand.Execute();//if move failed, but memento already created
+                    try{ undoCommand.Execute();}
+                    catch{}
                 }
-                catch (Exception e)
+                catch (Exception  e)
                 {
                     CatchActions(e);
                 }
-            }
 
-            if(field == winField)
-            {
-                PrintOut.Win();
             }
+            PrintOut.Win();
         }
         private static void CatchActions(Exception e)
         {

@@ -65,9 +65,16 @@ namespace TagsApp
          */
         public virtual void MoveTag(FromToCoords fromTo)
         {
+            if(fromTo.fromX > width || fromTo.fromY > length ||
+               fromTo.toX > width ||fromTo.toY> length)
+            {
+                throw new InvalidOperationException("No such position");
+            }
+
             double summ = Pow((Convert.ToInt32(fromTo.fromX) - Convert.ToInt32(fromTo.toX)), 2) +
                           Pow((Convert.ToInt32(fromTo.fromY) - Convert.ToInt32(fromTo.toY)), 2);
             double len = Sqrt(summ);
+
             if (Ceiling(len) >= 2)
             {
                 throw new InvalidOperationException("too far. choose a closer tag");

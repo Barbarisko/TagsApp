@@ -12,9 +12,7 @@ namespace TagsAppTests
     [TestFixture]
     class UndoCommandTests
     {
-        FromToCoords coords;
         Mock<ICommand> mockUndoCommand;
-        Mock<HistoryCareTaker> h;
         [Test]
         public void Execute_MoveTagResult()
         {

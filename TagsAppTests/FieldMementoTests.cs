@@ -10,23 +10,22 @@ namespace TagsAppTests
     [TestFixture]
     class FieldMementoTests
     {
-        Field f;
-        FieldMemento stub;
         [Test]
         public void Restore_AcceptW_L_Tags_ReturnFieldWithSameParameters()
         {
             //arrange
-            f = new Field(3, 3);
+            var f = new Field(3, 3);
             f.Width = 3;
             f.Length = 3;
             f.Tags[0, 0].Name = Tag.Empty;
-            stub = new FieldMemento(f, f.Tags, f.Width, f.Length);
 
-            stub.Tags[0, 1].Name = Tag.Empty;
+            var fieldMemento = new FieldMemento(f, f.Tags, f.Width, f.Length);
+
+            fieldMemento.Tags[0, 1].Name = Tag.Empty;
             //act
-            stub.Restore();
+            fieldMemento.Restore();
             //assert
-            Assert.AreEqual(f.Tags[0,1].Name, stub.Tags[0,1].Name);
+            Assert.AreEqual(f.Tags[0,1].Name, fieldMemento.Tags[0,1].Name);
         }
     }
 }

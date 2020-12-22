@@ -58,7 +58,7 @@ namespace TagsApp
         }
         public static void CustomizeSizeL()
         {
-            Console.WriteLine("length:");
+            Console.WriteLine(" length:");
         }
         public static void ShowRules()
         {
@@ -81,7 +81,8 @@ namespace TagsApp
         }
         public static void Restart()
         {
-            Console.WriteLine("Restart to play.");
+            Console.WriteLine("Back to the main menu.");
+            Console.WriteLine();
         }
         public static void Win()
         {
